@@ -939,29 +939,35 @@
     }
 
     // Load availability from API
-    async function loadAvailability() {
-      if (!state.selectedType) return;
-      
-      setLoading(true);
-      hideError();
+async function loadAvailability() {
+  if (!state.selectedType) return;
+  
+  setLoading(true);
+  hideError();
 
-      try {
-        const response = await fetch(
-          `${API_BASE}/get-availability?type=${state.selectedType.slug}&weeks=8`
-        );
-        const data = await response.json();
-
-        if (data.error) throw new Error(data.error);
-
-        state.slots = data.slots || [];
-        renderCalendar();
-      } catch (err) {
-        showError("Impossible de charger les disponibilités.");
-        console.error(err);
-      } finally {
-        setLoading(false);
+  try {
+    const response = await fetch(
+      `${API_BASE}/get-availability?type=${state.selectedType.slug}&weeks=8`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
       }
-    }
+    );
+    const data = await response.json();
+
+    if (data.error) throw new Error(data.error);
+
+    state.slots = data.slots || [];
+    renderCalendar();
+  } catch (err) {
+    showError("Impossible de charger les disponibilités.");
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+}
 
     // Render calendar
     function renderCalendar() {
