@@ -11,686 +11,759 @@
       box-sizing: border-box;
     }
     
-    :root {
-      --color-primary: #0A84FF;
-      --color-primary-hover: #0070E0;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-400: #9ca3af;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-900: #111827;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-    }
-    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: var(--gray-50);
-      color: var(--gray-900);
-      line-height: 1.5;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      line-height: 1.47;
+      -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 20px;
+      padding: 2rem 1rem;
     }
     
-    .booking-widget {
+    .bw {
       width: 100%;
-      max-width: 800px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
+      max-width: 680px;
     }
     
     /* Header */
-    .booking-widget__header {
+    .bw__header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--gray-200);
+      gap: 1rem;
+      padding: 1rem 0;
+      margin-bottom: 0.5rem;
     }
     
-    .booking-widget__back {
+    .bw__back {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      background: transparent;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      color: var(--gray-600);
+      gap: 0.25rem;
+      padding: 0.5rem 0.75rem;
+      margin-left: -0.75rem;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #86868b;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     
-    .booking-widget__back:hover {
-      background: var(--gray-50);
-      border-color: var(--gray-300);
+    .bw__back:hover {
+      background: rgba(0,0,0,0.04);
+      color: #1d1d1f;
     }
     
-    .booking-widget__title {
-      font-size: 18px;
+    .bw__back svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .bw__title {
+      font-size: 17px;
       font-weight: 600;
-      color: var(--gray-900);
+      color: #1d1d1f;
+    }
+    
+    /* Error */
+    .bw__error {
+      background: #fff0f0;
+      color: #de071c;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+    
+    .bw__error.visible {
+      display: block;
     }
     
     /* Content */
-    .booking-widget__content {
-      padding: 24px;
+    .bw__content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
     }
     
     /* Section */
-    .booking-section {
-      margin-bottom: 32px;
-    }
-    
-    .booking-section:last-child {
-      margin-bottom: 0;
-    }
-    
-    .booking-section__title {
+    .bw__section-title {
       font-size: 11px;
       font-weight: 600;
-      color: var(--gray-400);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+      color: #86868b;
+      margin-bottom: 1rem;
     }
     
-    /* Prestation types */
-    .booking-types {
+    /* Formulas */
+    .bw__formulas {
       display: flex;
-      gap: 12px;
+      gap: 0.75rem;
     }
     
     @media (max-width: 600px) {
-      .booking-types {
+      .bw__formulas {
         flex-direction: column;
       }
     }
     
-    .booking-type {
+    .bw__formula {
       flex: 1;
-      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1.25rem;
       background: #fff;
-      border: 2px solid var(--gray-200);
-      border-radius: var(--radius-lg);
+      border: 1.5px solid #d2d2d7;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
       text-align: left;
+      transition: all 0.2s ease;
     }
     
-    .booking-type:hover {
-      border-color: var(--gray-300);
-      transform: translateY(-1px);
+    .bw__formula:hover {
+      border-color: #86868b;
     }
     
-    .booking-type.selected {
-      border-color: var(--color-primary);
-      background: rgba(10, 132, 255, 0.02);
+    .bw__formula--selected {
+      border-color: #0071e3;
+      background: #f5f8ff;
     }
     
-    .booking-type__header {
+    .bw__formula-main {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+      align-items: baseline;
+      margin-bottom: 0.25rem;
     }
     
-    .booking-type__name {
+    .bw__formula-name {
       font-size: 15px;
       font-weight: 600;
-      color: var(--gray-900);
+      color: #1d1d1f;
     }
     
-    .booking-type__duration {
-      font-size: 12px;
-      color: var(--gray-500);
-      background: var(--gray-100);
-      padding: 2px 8px;
-      border-radius: 10px;
-    }
-    
-    .booking-type__desc {
+    .bw__formula-duration {
       font-size: 13px;
-      color: var(--gray-500);
-      margin-bottom: 12px;
+      color: #86868b;
+    }
+    
+    .bw__formula-desc {
+      font-size: 13px;
+      color: #86868b;
       line-height: 1.4;
+      margin-bottom: 0.75rem;
     }
     
-    .booking-type__price {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--gray-900);
-    }
-    
-    .booking-type__price span {
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--gray-500);
-    }
-    
-    /* Calendar wrapper */
-    .booking-calendar-wrapper {
+    .bw__formula-price {
       display: flex;
-      gap: 24px;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid #f5f5f7;
+    }
+    
+    .bw__formula-amount {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+    
+    .bw__formula-deposit {
+      font-size: 12px;
+      color: #86868b;
+    }
+    
+    /* Scheduling */
+    .bw__scheduling {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 1.5rem;
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.25rem;
+      border: 1px solid #d2d2d7;
     }
     
     @media (max-width: 600px) {
-      .booking-calendar-wrapper {
-        flex-direction: column;
+      .bw__scheduling {
+        grid-template-columns: 1fr;
       }
     }
     
     /* Calendar */
-    .booking-calendar {
-      flex: 1;
-      min-width: 280px;
-    }
-    
-    .booking-calendar__header {
+    .bw__calendar__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 1rem;
     }
     
-    .booking-calendar__title {
-      font-size: 16px;
+    .bw__calendar__title {
+      font-size: 15px;
       font-weight: 600;
-      color: var(--gray-900);
+      color: #1d1d1f;
     }
     
-    .booking-calendar__nav {
+    .bw__calendar__nav {
       display: flex;
-      gap: 8px;
+      gap: 0.25rem;
     }
     
-    .booking-calendar__nav button {
-      width: 32px;
-      height: 32px;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      background: #fff;
-      cursor: pointer;
+    .bw__calendar__nav button {
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: none;
+      border: 1px solid #d2d2d7;
+      border-radius: 6px;
+      color: #86868b;
+      cursor: pointer;
       transition: all 0.15s ease;
-      color: var(--gray-600);
     }
     
-    .booking-calendar__nav button:hover:not(:disabled) {
-      background: var(--gray-50);
-      border-color: var(--gray-300);
+    .bw__calendar__nav button:hover:not(:disabled) {
+      background: #f5f5f7;
+      border-color: #86868b;
     }
     
-    .booking-calendar__nav button:disabled {
-      opacity: 0.4;
+    .bw__calendar__nav button:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
     }
     
-    .booking-calendar__weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      margin-bottom: 8px;
+    .bw__calendar__nav button svg {
+      width: 16px;
+      height: 16px;
     }
     
-    .booking-calendar__weekdays span {
+    .bw__calendar__weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 0.5rem;
+    }
+    
+    .bw__calendar__weekdays span {
       text-align: center;
       font-size: 11px;
       font-weight: 600;
-      color: var(--gray-400);
-      padding: 8px 0;
-      text-transform: uppercase;
+      color: #86868b;
+      padding: 0.5rem 0;
     }
     
-    .booking-calendar__days {
+    .bw__calendar__days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
+      gap: 2px;
     }
     
-    .booking-calendar__day {
+    .bw__calendar__day {
       aspect-ratio: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.15s ease;
+      font-size: 13px;
+      border-radius: 50%;
       border: none;
-      background: transparent;
-      color: var(--gray-700);
+      background: none;
+      color: #1d1d1f;
+      cursor: pointer;
+      transition: all 0.1s ease;
     }
     
-    .booking-calendar__day:hover:not(.disabled):not(.selected):not(.other-month) {
-      background: var(--gray-100);
+    .bw__calendar__day:hover:not(:disabled):not(.selected) {
+      background: #f5f5f7;
     }
     
-    .booking-calendar__day.today {
+    .bw__calendar__day.today {
       font-weight: 600;
     }
     
-    .booking-calendar__day.available {
-      background: #e0f2fe;
-      color: #0369a1;
+    .bw__calendar__day.available {
+      background: #e8f4fd;
+      color: #0071e3;
       font-weight: 500;
     }
     
-    .booking-calendar__day.available:hover {
-      background: #bae6fd;
+    .bw__calendar__day.available:hover {
+      background: #d4ebfc;
     }
     
-    .booking-calendar__day.selected {
-      background: var(--color-primary);
+    .bw__calendar__day.selected {
+      background: #0071e3;
       color: #fff;
+      font-weight: 600;
     }
     
-    .booking-calendar__day.disabled {
-      color: var(--gray-300);
+    .bw__calendar__day.disabled {
+      color: #d2d2d7;
       cursor: not-allowed;
     }
     
-    .booking-calendar__day.other-month {
-      color: var(--gray-300);
-      cursor: default;
+    .bw__calendar__day.other {
+      color: #d2d2d7;
     }
     
     /* Slots */
-    .booking-slots {
-      min-width: 200px;
-      background: var(--gray-50);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+    .bw__slots {
+      display: flex;
+      flex-direction: column;
     }
     
-    .booking-slots__empty {
+    .bw__slots-empty {
+      font-size: 13px;
+      color: #86868b;
       text-align: center;
-      color: var(--gray-400);
-      font-size: 14px;
-      padding: 40px 16px;
+      padding: 2rem 1rem;
     }
     
-    .booking-slots__date {
-      font-size: 14px;
+    .bw__slots-date {
+      font-size: 13px;
       font-weight: 600;
-      color: var(--gray-700);
-      margin-bottom: 12px;
+      color: #1d1d1f;
+      margin-bottom: 0.75rem;
       text-transform: capitalize;
     }
     
-    .booking-slots__list {
+    .bw__slots-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.5rem;
     }
     
-    .booking-slot {
-      padding: 12px 16px;
-      background: #fff;
-      border: 2px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--gray-700);
-      transition: all 0.15s ease;
-      text-align: center;
-    }
-    
-    .booking-slot:hover {
-      border-color: var(--color-primary);
-    }
-    
-    .booking-slot.selected {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-      color: #fff;
-    }
-    
-    /* CTA Button */
-    .booking-widget__cta {
-      width: 100%;
-      margin-top: 16px;
-      padding: 14px 24px;
-      background: var(--gray-900);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    .bw__slot {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      padding: 0.75rem 1rem;
+      background: #f5f5f7;
+      border: 1.5px solid transparent;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
     
-    .booking-widget__cta:hover {
-      background: #000;
+    .bw__slot:hover {
+      border-color: #0071e3;
     }
     
-    .booking-widget__cta:disabled {
-      background: var(--gray-300);
-      cursor: not-allowed;
+    .bw__slot--selected {
+      background: #0071e3;
+      border-color: #0071e3;
     }
     
-    .booking-widget__cta--primary {
-      background: var(--color-primary);
+    .bw__slot-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d1d1f;
     }
     
-    .booking-widget__cta--primary:hover {
-      background: var(--color-primary-hover);
+    .bw__slot--selected .bw__slot-label {
+      color: #fff;
+    }
+    
+    .bw__slot-time {
+      font-size: 12px;
+      color: #86868b;
+    }
+    
+    .bw__slot--selected .bw__slot-time {
+      color: rgba(255,255,255,0.8);
     }
     
     /* Form */
-    .booking-form-group {
-      margin-bottom: 16px;
+    .bw__form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: #fff;
+      border: 1px solid #d2d2d7;
+      border-radius: 14px;
+      padding: 1.25rem;
     }
     
-    .booking-form-group label {
-      display: block;
+    .bw__field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+    
+    .bw__field label {
       font-size: 13px;
       font-weight: 500;
-      color: var(--gray-700);
-      margin-bottom: 6px;
+      color: #1d1d1f;
     }
     
-    .booking-form-group input,
-    .booking-form-group textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      transition: all 0.15s ease;
+    .bw__field label span {
+      font-weight: 400;
+      color: #86868b;
+    }
+    
+    .bw__field input,
+    .bw__field textarea {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid #d2d2d7;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #1d1d1f;
       background: #fff;
+      transition: all 0.15s ease;
     }
     
-    .booking-form-group input:focus,
-    .booking-form-group textarea:focus {
+    .bw__field input:focus,
+    .bw__field textarea:focus {
       outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.1);
+      border-color: #0071e3;
+      box-shadow: 0 0 0 3px rgba(0,113,227,0.1);
     }
     
-    .booking-form-group input::placeholder,
-    .booking-form-group textarea::placeholder {
-      color: var(--gray-400);
+    .bw__field input::placeholder,
+    .bw__field textarea::placeholder {
+      color: #86868b;
     }
     
-    .booking-form-group textarea {
-      min-height: 80px;
+    .bw__field textarea {
       resize: vertical;
+      min-height: 80px;
       font-family: inherit;
     }
     
-    .booking-form-row {
+    .bw__field-row {
       display: flex;
-      gap: 12px;
+      gap: 0.75rem;
     }
     
-    .booking-form-row .booking-form-group {
+    .bw__field-row .bw__field {
       flex: 1;
     }
     
-    /* Summary */
-    .booking-summary {
-      background: var(--gray-50);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 20px;
+    /* Location Options */
+    .bw__location-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
     
-    .booking-summary__row {
+    .bw__location-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1rem 1.25rem;
+      background: #fff;
+      border: 1.5px solid #d2d2d7;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    
+    .bw__location-option:hover {
+      border-color: #86868b;
+    }
+    
+    .bw__location-option--selected {
+      border-color: #0071e3;
+      background: #f5f8ff;
+    }
+    
+    .bw__location-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #0071e3;
+      cursor: pointer;
+    }
+    
+    .bw__location-option-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+    
+    .bw__location-option-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1d1d1f;
+    }
+    
+    .bw__location-option-address {
+      font-size: 13px;
+      color: #86868b;
+    }
+    
+    /* Summary */
+    .bw__summary {
+      background: #fff;
+      border: 1px solid #d2d2d7;
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+    
+    .bw__summary-row {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      padding: 0.625rem 0;
       font-size: 14px;
-      margin-bottom: 10px;
     }
     
-    .booking-summary__row:last-child {
-      margin-bottom: 0;
+    .bw__summary-row > span:first-child {
+      color: #86868b;
     }
     
-    .booking-summary__label {
-      color: var(--gray-500);
-    }
-    
-    .booking-summary__value {
+    .bw__summary-row > span:last-child {
+      color: #1d1d1f;
       font-weight: 500;
-      color: var(--gray-900);
+      text-align: right;
+      max-width: 60%;
     }
     
-    .booking-summary__divider {
+    .bw__summary-divider {
       height: 1px;
-      background: var(--gray-200);
-      margin: 16px 0;
+      background: #d2d2d7;
+      margin: 0.5rem 0;
     }
     
-    .booking-summary__row--highlight {
-      padding-top: 12px;
-      border-top: 1px solid var(--gray-200);
+    .bw__summary-row--highlight > span:last-child {
+      font-size: 17px;
       font-weight: 600;
-    }
-    
-    .booking-summary__row--highlight .booking-summary__value {
-      color: var(--color-primary);
-      font-size: 16px;
+      color: #0071e3;
     }
     
     /* Legal */
-    .booking-legal {
+    .bw__legal {
       font-size: 12px;
-      color: var(--gray-500);
+      color: #86868b;
       text-align: center;
-      margin-bottom: 16px;
+      margin: 1.5rem 0 1rem;
+      line-height: 1.5;
     }
     
-    .booking-legal a {
-      color: var(--gray-700);
+    .bw__legal a {
+      color: #0071e3;
+      text-decoration: none;
+    }
+    
+    .bw__legal a:hover {
       text-decoration: underline;
     }
     
-    /* Error */
-    .booking-widget__error {
-      background: #fef2f2;
-      color: #b91c1c;
-      padding: 12px 16px;
-      margin: 0 24px 16px 24px;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      display: none;
+    /* CTA */
+    .bw__cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.875rem 1.5rem;
+      margin-top: 1.5rem;
+      background: #1d1d1f;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
     
-    .booking-widget__error.visible {
-      display: block;
+    .bw__cta:hover:not(:disabled) {
+      background: #000;
+    }
+    
+    .bw__cta:disabled {
+      background: #86868b;
+      cursor: not-allowed;
+    }
+    
+    .bw__cta--primary {
+      background: #0071e3;
+    }
+    
+    .bw__cta--primary:hover:not(:disabled) {
+      background: #0077ed;
+    }
+    
+    .bw__cta svg {
+      width: 18px;
+      height: 18px;
     }
     
     /* Loading */
-    .booking-widget__loading {
+    .bw__loading {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 60px 24px;
-      gap: 16px;
+      align-items: center;
+      min-height: 400px;
     }
     
-    .spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid var(--gray-200);
-      border-top-color: var(--color-primary);
+    .bw__spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #d2d2d7;
+      border-top-color: #0071e3;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: bw-spin 0.6s linear infinite;
     }
     
-    @keyframes spin {
+    @keyframes bw-spin {
       to { transform: rotate(360deg); }
     }
     
     /* Views */
-    .view {
-      display: none;
-    }
-    
-    .view.active {
-      display: block;
-    }
+    .view { display: none; }
+    .view.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="booking-widget">
-    <!-- Error message -->
-    <div id="error" class="booking-widget__error"></div>
+  <div class="bw">
+    <!-- Error -->
+    <div id="error" class="bw__error"></div>
     
     <!-- Loading -->
-    <div id="loading" class="booking-widget__loading" style="display: none;">
-      <div class="spinner"></div>
-      <span>Chargement...</span>
+    <div id="loading" class="bw__loading" style="display: none;">
+      <div class="bw__spinner"></div>
     </div>
     
     <!-- STEP 1: Calendar -->
     <div id="view-calendar" class="view active">
-      <div class="booking-widget__header">
-        <h2 class="booking-widget__title">Réserver une séance</h2>
-      </div>
+      <header class="bw__header">
+        <h1 class="bw__title">Réserver une séance</h1>
+      </header>
       
-      <div class="booking-widget__content">
-        <!-- Prestation types -->
-        <section class="booking-section">
-          <h3 class="booking-section__title">Choisissez votre formule</h3>
-          <div class="booking-types" id="prestation-types"></div>
+      <div class="bw__content">
+        <!-- Formulas -->
+        <section>
+          <h2 class="bw__section-title">Choisissez votre formule</h2>
+          <div class="bw__formulas" id="formulas"></div>
         </section>
         
         <!-- Calendar + Slots -->
-        <section class="booking-section">
-          <h3 class="booking-section__title">Sélectionnez une date</h3>
-          <div class="booking-calendar-wrapper">
-            <div class="booking-calendar">
-              <div class="booking-calendar__header">
-                <span class="booking-calendar__title" id="calendar-month"></span>
-                <div class="booking-calendar__nav">
+        <section>
+          <h2 class="bw__section-title">Sélectionnez une date</h2>
+          <div class="bw__scheduling">
+            <div class="bw__calendar">
+              <div class="bw__calendar__header">
+                <span class="bw__calendar__title" id="calendar-month"></span>
+                <div class="bw__calendar__nav">
                   <button onclick="prevMonth()" id="btn-prev">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
                   <button onclick="nextMonth()" id="btn-next">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                   </button>
                 </div>
               </div>
-              <div class="booking-calendar__weekdays">
-                <span>LUN</span><span>MAR</span><span>MER</span><span>JEU</span><span>VEN</span><span>SAM</span><span>DIM</span>
+              <div class="bw__calendar__weekdays">
+                <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
               </div>
-              <div class="booking-calendar__days" id="calendar-days"></div>
+              <div class="bw__calendar__days" id="calendar-days"></div>
             </div>
-            
-            <div class="booking-slots" id="slots-panel">
-              <div class="booking-slots__empty">Sélectionnez une date</div>
+            <div class="bw__slots" id="slots-panel">
+              <p class="bw__slots-empty">Sélectionnez une date</p>
             </div>
           </div>
+          <button id="btn-continue-calendar" class="bw__cta" onclick="showView('form')" style="display: none;">
+            Continuer
+          </button>
         </section>
       </div>
     </div>
     
     <!-- STEP 2: Form -->
     <div id="view-form" class="view">
-      <div class="booking-widget__header">
-        <button class="booking-widget__back" onclick="showView('calendar')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <header class="bw__header">
+        <button class="bw__back" onclick="showView('calendar')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           <span>Retour</span>
         </button>
-        <h2 class="booking-widget__title">Vos coordonnées</h2>
-      </div>
+        <h1 class="bw__title">Vos coordonnées</h1>
+      </header>
       
-      <div class="booking-widget__content">
+      <div class="bw__content">
         <form id="booking-form" onsubmit="submitForm(event)">
-          <div class="booking-form-row">
-            <div class="booking-form-group">
-              <label>Prénom *</label>
-              <input type="text" id="firstName" placeholder="Jean" required>
+          <div class="bw__form">
+            <div class="bw__field-row">
+              <div class="bw__field">
+                <label>Prénom *</label>
+                <input type="text" id="firstName" placeholder="Jean" required>
+              </div>
+              <div class="bw__field">
+                <label>Nom *</label>
+                <input type="text" id="lastName" placeholder="Dupont" required>
+              </div>
             </div>
-            <div class="booking-form-group">
-              <label>Nom *</label>
-              <input type="text" id="lastName" placeholder="Dupont" required>
+            
+            <div class="bw__field">
+              <label>Email *</label>
+              <input type="email" id="email" placeholder="jean@exemple.com" required>
             </div>
-          </div>
-          
-          <div class="booking-form-group">
-            <label>Email *</label>
-            <input type="email" id="email" placeholder="jean@exemple.com" required>
-          </div>
-          
-          <div class="booking-form-group">
-            <label>Téléphone</label>
-            <input type="tel" id="phone" placeholder="06 12 34 56 78">
-          </div>
-          
-          <div class="booking-form-group">
-            <label>Adresse du shooting *</label>
-            <input type="text" id="address" placeholder="123 rue de la Photo" required>
-          </div>
-          
-          <div class="booking-form-row">
-            <div class="booking-form-group">
-              <label>Code postal *</label>
-              <input type="text" id="postalCode" placeholder="75001" required>
+            
+            <div class="bw__field">
+              <label>Téléphone</label>
+              <input type="tel" id="phone" placeholder="06 12 34 56 78">
             </div>
-            <div class="booking-form-group">
-              <label>Ville *</label>
-              <input type="text" id="city" placeholder="Paris" required>
+            
+            <div class="bw__field">
+              <label>Adresse du shooting *</label>
+              <input type="text" id="address" placeholder="12 rue du Commerce" required>
             </div>
-          </div>
-          
-          <div class="booking-form-group">
-            <label>Notes (accès, parking...)</label>
-            <textarea id="notes" placeholder="Informations utiles pour le jour J"></textarea>
-          </div>
-          
-          <div class="booking-summary">
-            <div class="booking-summary__row">
-              <span class="booking-summary__label">Prestation</span>
-              <span class="booking-summary__value" id="summary-type"></span>
+            
+            <div class="bw__field-row">
+              <div class="bw__field">
+                <label>Code postal *</label>
+                <input type="text" id="postalCode" placeholder="75001" required>
+              </div>
+              <div class="bw__field">
+                <label>Ville *</label>
+                <input type="text" id="city" placeholder="Paris" required>
+              </div>
             </div>
-            <div class="booking-summary__row">
-              <span class="booking-summary__label">Date</span>
-              <span class="booking-summary__value" id="summary-date"></span>
-            </div>
-            <div class="booking-summary__row">
-              <span class="booking-summary__label">Créneau</span>
-              <span class="booking-summary__value" id="summary-slot"></span>
-            </div>
-            <div class="booking-summary__divider"></div>
-            <div class="booking-summary__row">
-              <span class="booking-summary__label">Prix total</span>
-              <span class="booking-summary__value" id="summary-total"></span>
-            </div>
-            <div class="booking-summary__row booking-summary__row--highlight">
-              <span class="booking-summary__label">Acompte à payer</span>
-              <span class="booking-summary__value" id="summary-deposit"></span>
+            
+            <div class="bw__field">
+              <label>Notes <span>(optionnel)</span></label>
+              <textarea id="notes" placeholder="Accès, parking, code d'entrée..."></textarea>
             </div>
           </div>
           
-          <p class="booking-legal">
+          <div class="bw__summary" style="margin-top: 1.5rem;">
+            <div class="bw__summary-row">
+              <span>Prestation</span>
+              <span id="summary-type"></span>
+            </div>
+            <div class="bw__summary-row">
+              <span>Date</span>
+              <span id="summary-date"></span>
+            </div>
+            <div class="bw__summary-row">
+              <span>Créneau</span>
+              <span id="summary-slot"></span>
+            </div>
+            <div class="bw__summary-divider"></div>
+            <div class="bw__summary-row">
+              <span>Prix total</span>
+              <span id="summary-total"></span>
+            </div>
+            <div class="bw__summary-row bw__summary-row--highlight">
+              <span>Acompte à payer</span>
+              <span id="summary-deposit"></span>
+            </div>
+          </div>
+          
+          <p class="bw__legal">
             En continuant, vous acceptez nos <a href="https://isokron.fr/cgv" target="_blank">CGV</a> 
             et notre <a href="https://isokron.fr/confidentialite" target="_blank">politique de confidentialité</a>.
           </p>
           
-          <button type="submit" class="booking-widget__cta booking-widget__cta--primary" id="submit-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <button type="submit" class="bw__cta bw__cta--primary" id="submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2"/>
               <line x1="1" y1="10" x2="23" y2="10"/>
             </svg>
             <span id="submit-text">Payer l'acompte</span>
@@ -702,7 +775,7 @@
 
   <script>
     // ================================================
-    // CONFIGURATION SUPABASE
+    // CONFIG
     // ================================================
     const SUPABASE_URL = "https://eenyygeizwabcfnotcdl.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlbnl5Z2VpendhYmNmbm90Y2RsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMzE4MDIsImV4cCI6MjA4MDgwNzgwMn0.aSif5DIk1Bv8wdJWDofHNmuscNbi5-B2NlGEmFhVFoY";
@@ -721,38 +794,29 @@
     };
 
     // ================================================
-    // INITIALIZATION
+    // INIT
     // ================================================
-    document.addEventListener('DOMContentLoaded', async () => {
-      await loadPrestationTypes();
-    });
+    document.addEventListener('DOMContentLoaded', loadPrestationTypes);
 
     // ================================================
-    // DATA LOADING
+    // DATA
     // ================================================
     async function loadPrestationTypes() {
       showLoading(true);
       try {
-        const response = await fetch(
+        const res = await fetch(
           `${SUPABASE_URL}/rest/v1/prestation_types?is_active=eq.true&order=price.asc`,
-          {
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-            }
-          }
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
         );
-        const types = await response.json();
-        
-        if (types && types.length > 0) {
+        const types = await res.json();
+        if (types?.length) {
           state.prestationTypes = types;
           state.selectedType = types[0];
-          renderPrestationTypes();
+          renderFormulas();
           await loadAvailability();
         }
       } catch (err) {
         showError("Impossible de charger les formules.");
-        console.error(err);
       } finally {
         showLoading(false);
       }
@@ -760,45 +824,37 @@
 
     async function loadAvailability() {
       if (!state.selectedType) return;
-      
       try {
-        const response = await fetch(
+        const res = await fetch(
           `${API_BASE}/get-availability?type=${state.selectedType.slug}&weeks=8`,
-          {
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-            }
-          }
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
         );
-        const data = await response.json();
-        
-        if (data.error) throw new Error(data.error);
-        
+        const data = await res.json();
         state.slots = data.slots || [];
         renderCalendar();
       } catch (err) {
-        console.error('Erreur disponibilités:', err);
+        console.error(err);
       }
     }
 
     // ================================================
     // RENDERERS
     // ================================================
-    function renderPrestationTypes() {
-      const container = document.getElementById('prestation-types');
-      container.innerHTML = state.prestationTypes.map(type => {
-        const deposit = Math.round(type.price * (type.deposit_percent / 100));
-        const isSelected = state.selectedType?.id === type.id;
+    function renderFormulas() {
+      const el = document.getElementById('formulas');
+      el.innerHTML = state.prestationTypes.map(t => {
+        const deposit = Math.round(t.price * (t.deposit_percent / 100));
+        const sel = state.selectedType?.id === t.id;
         return `
-          <button class="booking-type ${isSelected ? 'selected' : ''}" onclick="selectType('${type.id}')">
-            <div class="booking-type__header">
-              <span class="booking-type__name">${type.name}</span>
-              <span class="booking-type__duration">${type.duration_hours}h</span>
+          <button class="bw__formula ${sel ? 'bw__formula--selected' : ''}" onclick="selectType('${t.id}')">
+            <div class="bw__formula-main">
+              <span class="bw__formula-name">${t.name}</span>
+              <span class="bw__formula-duration">${t.duration_hours}h</span>
             </div>
-            <p class="booking-type__desc">${type.description || ''}</p>
-            <div class="booking-type__price">
-              ${type.price} € <span>(acompte ${deposit} €)</span>
+            <p class="bw__formula-desc">${t.description || ''}</p>
+            <div class="bw__formula-price">
+              <span class="bw__formula-amount">${t.price} €</span>
+              <span class="bw__formula-deposit">Acompte ${deposit} €</span>
             </div>
           </button>
         `;
@@ -808,127 +864,110 @@
     function renderCalendar() {
       const year = state.currentMonth.getFullYear();
       const month = state.currentMonth.getMonth();
-      const monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 
-                          'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-      
+      const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
       document.getElementById('calendar-month').textContent = `${monthNames[month]} ${year}`;
       
       const availableDates = new Set(state.slots.map(s => s.date));
       const container = document.getElementById('calendar-days');
       container.innerHTML = '';
       
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      
+      const today = new Date(); today.setHours(0,0,0,0);
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
       const startDay = (firstDay.getDay() + 6) % 7;
       
-      // Previous month days
-      const prevMonthLastDay = new Date(year, month, 0).getDate();
+      // Prev month
+      const prevLast = new Date(year, month, 0).getDate();
       for (let i = startDay - 1; i >= 0; i--) {
-        container.appendChild(createDayButton(prevMonthLastDay - i, true, false, false));
+        container.appendChild(createDay(prevLast - i, 'other'));
       }
       
-      // Current month days
-      for (let day = 1; day <= lastDay.getDate(); day++) {
-        const date = new Date(year, month, day);
+      // Current month
+      for (let d = 1; d <= lastDay.getDate(); d++) {
+        const date = new Date(year, month, d);
         const dateStr = formatDateISO(date);
-        const isAvailable = availableDates.has(dateStr);
+        const isAvail = availableDates.has(dateStr);
         const isPast = date < today;
         const isToday = date.getTime() === today.getTime();
-        const isSelected = state.selectedDate === dateStr;
+        const isSel = state.selectedDate === dateStr;
         
-        const btn = createDayButton(day, false, isAvailable && !isPast, isPast);
-        if (isToday) btn.classList.add('today');
-        if (isSelected) btn.classList.add('selected');
-        if (isAvailable && !isPast) {
-          btn.onclick = () => selectDate(dateStr);
-        }
+        let cls = '';
+        if (isSel) cls = 'selected';
+        else if (isAvail && !isPast) cls = 'available';
+        else if (isPast) cls = 'disabled';
+        if (isToday) cls += ' today';
+        
+        const btn = createDay(d, cls);
+        if (isAvail && !isPast) btn.onclick = () => selectDate(dateStr);
         container.appendChild(btn);
       }
       
-      // Next month days
-      const totalCells = container.children.length;
-      const remainingCells = Math.ceil(totalCells / 7) * 7 - totalCells;
-      for (let day = 1; day <= remainingCells; day++) {
-        container.appendChild(createDayButton(day, true, false, false));
+      // Next month
+      const total = container.children.length;
+      const remaining = Math.ceil(total / 7) * 7 - total;
+      for (let d = 1; d <= remaining; d++) {
+        container.appendChild(createDay(d, 'other'));
       }
       
-      // Nav buttons
-      const minDate = new Date();
-      document.getElementById('btn-prev').disabled = 
-        state.currentMonth <= new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-      
+      document.getElementById('btn-prev').disabled = state.currentMonth <= new Date(today.getFullYear(), today.getMonth(), 1);
       renderSlots();
     }
 
-    function createDayButton(day, isOtherMonth, isAvailable, isPast) {
+    function createDay(day, cls) {
       const btn = document.createElement('button');
-      btn.className = 'booking-calendar__day';
+      btn.className = `bw__calendar__day ${cls}`;
       btn.textContent = day;
       btn.type = 'button';
-      if (isOtherMonth) btn.classList.add('other-month', 'disabled');
-      if (isAvailable) btn.classList.add('available');
-      if (isPast && !isOtherMonth) btn.classList.add('disabled');
+      if (cls.includes('disabled') || cls.includes('other')) btn.disabled = true;
       return btn;
     }
 
     function renderSlots() {
-      const container = document.getElementById('slots-panel');
+      const el = document.getElementById('slots-panel');
+      const btnContinue = document.getElementById('btn-continue-calendar');
       
       if (!state.selectedDate) {
-        container.innerHTML = '<div class="booking-slots__empty">Sélectionnez une date</div>';
+        el.innerHTML = '<p class="bw__slots-empty">Sélectionnez une date</p>';
+        btnContinue.style.display = 'none';
         return;
       }
       
       const dateSlots = state.slots.filter(s => s.date === state.selectedDate);
-      
-      if (dateSlots.length === 0) {
-        container.innerHTML = '<div class="booking-slots__empty">Aucun créneau disponible</div>';
+      if (!dateSlots.length) {
+        el.innerHTML = '<p class="bw__slots-empty">Aucun créneau</p>';
+        btnContinue.style.display = 'none';
         return;
       }
       
-      // Parser la date sans décalage UTC
-      const [year, month, day] = state.selectedDate.split('-').map(Number);
-      const date = new Date(year, month - 1, day);
-      const dateLabel = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
-      });
+      const [y, m, d] = state.selectedDate.split('-').map(Number);
+      const dateLabel = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
       
-      let html = `<div class="booking-slots__date">${dateLabel}</div><div class="booking-slots__list">`;
+      el.innerHTML = `
+        <p class="bw__slots-date">${dateLabel}</p>
+        <div class="bw__slots-list">
+          ${dateSlots.map(slot => {
+            const sel = state.selectedSlot?.startTime === slot.startTime && state.selectedSlot?.date === slot.date;
+            return `
+              <button type="button" class="bw__slot ${sel ? 'bw__slot--selected' : ''}" onclick='selectSlot(${JSON.stringify(slot)})'>
+                <span class="bw__slot-label">${getSlotLabel(slot)}</span>
+                <span class="bw__slot-time">${getSlotTime(slot)}</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
       
-      dateSlots.forEach(slot => {
-        const isSelected = state.selectedSlot?.startTime === slot.startTime && 
-                          state.selectedSlot?.date === slot.date;
-        const label = getSlotLabel(slot);
-        html += `
-          <button type="button" class="booking-slot ${isSelected ? 'selected' : ''}" 
-                  onclick='selectSlot(${JSON.stringify(slot)})'>
-            ${label}
-          </button>
-        `;
-      });
-      
-      html += '</div>';
-      
-      if (state.selectedSlot) {
-        html += `<button type="button" class="booking-widget__cta" onclick="showView('form')">Continuer</button>`;
-      }
-      
-      container.innerHTML = html;
+      btnContinue.style.display = state.selectedSlot ? 'flex' : 'none';
     }
 
     // ================================================
     // HANDLERS
     // ================================================
-    function selectType(typeId) {
-      state.selectedType = state.prestationTypes.find(t => t.id === typeId);
+    function selectType(id) {
+      state.selectedType = state.prestationTypes.find(t => t.id === id);
       state.selectedDate = null;
       state.selectedSlot = null;
-      renderPrestationTypes();
+      renderFormulas();
       loadAvailability();
     }
 
@@ -953,80 +992,58 @@
       renderCalendar();
     }
 
-    function showView(viewName) {
+    function showView(name) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById(`view-${viewName}`).classList.add('active');
-      
-      if (viewName === 'form') {
-        updateFormSummary();
-      }
+      document.getElementById(`view-${name}`).classList.add('active');
+      if (name === 'form') updateSummary();
     }
 
-    function updateFormSummary() {
-      const type = state.selectedType;
-      const slot = state.selectedSlot;
-      const deposit = Math.round(type.price * (type.deposit_percent / 100));
+    function updateSummary() {
+      const t = state.selectedType;
+      const s = state.selectedSlot;
+      const deposit = Math.round(t.price * (t.deposit_percent / 100));
+      const [y, m, d] = s.date.split('-').map(Number);
       
-      // Parser la date sans décalage UTC
-      const [year, month, day] = slot.date.split('-').map(Number);
-      const date = new Date(year, month - 1, day);
-      
-      document.getElementById('summary-type').textContent = type.name;
-      document.getElementById('summary-date').textContent = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
-      });
-      document.getElementById('summary-slot').textContent = getSlotLabel(slot);
-      document.getElementById('summary-total').textContent = `${type.price} €`;
+      document.getElementById('summary-type').textContent = t.name;
+      document.getElementById('summary-date').textContent = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+      document.getElementById('summary-slot').textContent = `${getSlotLabel(s)} · ${getSlotTime(s)}`;
+      document.getElementById('summary-total').textContent = `${t.price} €`;
       document.getElementById('summary-deposit').textContent = `${deposit} €`;
       document.getElementById('submit-text').textContent = `Payer ${deposit} €`;
     }
 
-    async function submitForm(event) {
-      event.preventDefault();
-      
-      const submitBtn = document.getElementById('submit-btn');
-      submitBtn.disabled = true;
+    async function submitForm(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
       document.getElementById('submit-text').textContent = 'Chargement...';
       
-      const payload = {
-        prestationType: state.selectedType.slug,
-        date: state.selectedSlot.date,
-        startTime: state.selectedSlot.startTime,
-        endTime: state.selectedSlot.endTime,
-        firstName: document.getElementById('firstName').value.trim(),
-        lastName: document.getElementById('lastName').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        postalCode: document.getElementById('postalCode').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        notes: document.getElementById('notes').value.trim()
-      };
-      
       try {
-        const response = await fetch(`${API_BASE}/create-booking`, {
+        const res = await fetch(`${API_BASE}/create-booking`, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify(payload)
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+          body: JSON.stringify({
+            prestationType: state.selectedType.slug,
+            date: state.selectedSlot.date,
+            startTime: state.selectedSlot.startTime,
+            endTime: state.selectedSlot.endTime,
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            postalCode: document.getElementById('postalCode').value.trim(),
+            city: document.getElementById('city').value.trim(),
+            notes: document.getElementById('notes').value.trim()
+          })
         });
-        
-        const data = await response.json();
-        
+        const data = await res.json();
         if (data.error) throw new Error(data.error);
-        
-        if (data.checkoutUrl) {
-          window.location.href = data.checkoutUrl;
-        }
+        if (data.checkoutUrl) window.location.href = data.checkoutUrl;
       } catch (err) {
-        showError(err.message || "Une erreur est survenue.");
+        showError(err.message || "Erreur");
+        btn.disabled = false;
         const deposit = Math.round(state.selectedType.price * (state.selectedType.deposit_percent / 100));
-        submitBtn.disabled = false;
         document.getElementById('submit-text').textContent = `Payer ${deposit} €`;
       }
     }
@@ -1035,18 +1052,17 @@
     // HELPERS
     // ================================================
     function getSlotLabel(slot) {
-      if (state.selectedType?.slug === 'journee') {
-        return 'Journée (9h - 16h)';
-      }
-      return slot.startTime === '09:00' ? 'Matin (9h - 12h)' : 'Après-midi (13h - 16h)';
+      if (state.selectedType?.slug === 'journee') return 'Journée complète';
+      return slot.startTime === '09:00' ? 'Matin' : 'Après-midi';
+    }
+
+    function getSlotTime(slot) {
+      if (state.selectedType?.slug === 'journee') return '9h – 16h';
+      return slot.startTime === '09:00' ? '9h – 12h' : '13h – 16h';
     }
 
     function formatDateISO(date) {
-      // Formater sans décalage UTC
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
     }
 
     function showLoading(show) {
@@ -1054,9 +1070,9 @@
       document.getElementById('view-calendar').style.display = show ? 'none' : 'block';
     }
 
-    function showError(message) {
+    function showError(msg) {
       const el = document.getElementById('error');
-      el.textContent = message;
+      el.textContent = msg;
       el.classList.add('visible');
       setTimeout(() => el.classList.remove('visible'), 5000);
     }
