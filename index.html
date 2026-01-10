@@ -697,48 +697,48 @@
       </header>
       
       <div class="bw__content">
-        <form id="booking-form" onsubmit="submitForm(event)">
+        <form id="booking-form" onsubmit="submitForm(event)" autocomplete="off">
           <div class="bw__form">
             <div class="bw__field-row">
               <div class="bw__field">
                 <label>Prénom *</label>
-                <input type="text" id="firstName" placeholder="Jean" required>
+                <input type="text" id="firstName" placeholder="Jean" required autocomplete="off">
               </div>
               <div class="bw__field">
                 <label>Nom *</label>
-                <input type="text" id="lastName" placeholder="Dupont" required>
+                <input type="text" id="lastName" placeholder="Dupont" required autocomplete="off">
               </div>
             </div>
             
             <div class="bw__field">
               <label>Email *</label>
-              <input type="email" id="email" placeholder="jean@exemple.com" required>
+              <input type="email" id="email" placeholder="jean@exemple.com" required autocomplete="off">
             </div>
             
             <div class="bw__field">
               <label>Téléphone</label>
-              <input type="tel" id="phone" placeholder="06 12 34 56 78">
+              <input type="tel" id="phone" placeholder="06 12 34 56 78" autocomplete="off">
             </div>
             
             <div class="bw__field">
               <label>Adresse du shooting *</label>
-              <input type="text" id="address" placeholder="12 rue du Commerce" required>
+              <input type="text" id="address" placeholder="12 rue du Commerce" required autocomplete="off">
             </div>
             
             <div class="bw__field-row">
               <div class="bw__field">
                 <label>Code postal *</label>
-                <input type="text" id="postalCode" placeholder="75001" required>
+                <input type="text" id="postalCode" placeholder="75001" required autocomplete="off">
               </div>
               <div class="bw__field">
                 <label>Ville *</label>
-                <input type="text" id="city" placeholder="Paris" required>
+                <input type="text" id="city" placeholder="Paris" required autocomplete="off">
               </div>
             </div>
             
             <div class="bw__field">
               <label>Notes <span>(optionnel)</span></label>
-              <textarea id="notes" placeholder="Accès, parking, code d'entrée..."></textarea>
+              <textarea id="notes" placeholder="Accès, parking, code d'entrée..." autocomplete="off"></textarea>
             </div>
           </div>
           
