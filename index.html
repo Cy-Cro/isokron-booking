@@ -889,7 +889,10 @@
         return;
       }
       
-      const dateLabel = new Date(state.selectedDate).toLocaleDateString('fr-FR', {
+      // Parser la date sans décalage UTC
+      const [year, month, day] = state.selectedDate.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      const dateLabel = date.toLocaleDateString('fr-FR', {
         weekday: 'long',
         day: 'numeric',
         month: 'long'
@@ -964,8 +967,12 @@
       const slot = state.selectedSlot;
       const deposit = Math.round(type.price * (type.deposit_percent / 100));
       
+      // Parser la date sans décalage UTC
+      const [year, month, day] = slot.date.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      
       document.getElementById('summary-type').textContent = type.name;
-      document.getElementById('summary-date').textContent = new Date(slot.date).toLocaleDateString('fr-FR', {
+      document.getElementById('summary-date').textContent = date.toLocaleDateString('fr-FR', {
         weekday: 'long',
         day: 'numeric',
         month: 'long'
