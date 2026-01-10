@@ -344,7 +344,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.875rem 1rem;
+      padding: 0.875rem 1.25rem;
       background: #f5f5f7;
       border: 1.5px solid transparent;
       border-radius: 10px;
@@ -367,7 +367,6 @@
       font-size: 14px;
       font-weight: 500;
       color: #1d1d1f;
-      flex-shrink: 0;
     }
     
     .bw__slot--selected .bw__slot-label {
@@ -378,7 +377,6 @@
       font-size: 12px;
       color: #86868b;
       white-space: nowrap;
-      margin-left: 0.75rem;
     }
     
     .bw__slot--selected .bw__slot-time {
@@ -799,6 +797,9 @@
       selectedSlot: null,
       currentMonth: new Date()
     };
+    
+    // Cache des disponibilités par type (pour éviter les appels répétés)
+    const availabilityCache = {};
 
     // ================================================
     // INIT
@@ -820,7 +821,9 @@
           state.prestationTypes = types;
           state.selectedType = types[0];
           renderFormulas();
-          await loadAvailability();
+          
+          // Charger toutes les disponibilités en parallèle
+          await loadAllAvailabilities();
         }
       } catch (err) {
         showError("Impossible de charger les formules.");
@@ -829,19 +832,33 @@
       }
     }
 
-    async function loadAvailability() {
-      if (!state.selectedType) return;
-      try {
-        const res = await fetch(
-          `${API_BASE}/get-availability?type=${state.selectedType.slug}&weeks=8`,
-          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
-        );
-        const data = await res.json();
-        state.slots = data.slots || [];
-        renderCalendar();
-      } catch (err) {
-        console.error(err);
-      }
+    async function loadAllAvailabilities() {
+      // Charger les disponibilités pour tous les types en parallèle
+      const promises = state.prestationTypes.map(async (type) => {
+        try {
+          const res = await fetch(
+            `${API_BASE}/get-availability?type=${type.slug}&weeks=8`,
+            { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+          );
+          const data = await res.json();
+          availabilityCache[type.slug] = data.slots || [];
+        } catch (err) {
+          console.error(`Erreur chargement disponibilités ${type.slug}:`, err);
+          availabilityCache[type.slug] = [];
+        }
+      });
+      
+      await Promise.all(promises);
+      
+      // Appliquer les slots du type sélectionné
+      state.slots = availabilityCache[state.selectedType.slug] || [];
+      renderCalendar();
+    }
+
+    function applyAvailabilityFromCache() {
+      // Utiliser le cache au lieu de refaire un appel API
+      state.slots = availabilityCache[state.selectedType.slug] || [];
+      renderCalendar();
     }
 
     // ================================================
@@ -975,7 +992,7 @@
       state.selectedDate = null;
       state.selectedSlot = null;
       renderFormulas();
-      loadAvailability();
+      applyAvailabilityFromCache(); // Instantané depuis le cache
     }
 
     function selectDate(dateStr) {
