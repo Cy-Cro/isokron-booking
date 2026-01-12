@@ -1061,11 +1061,11 @@
       const [y, m, d] = state.selectedDate.split('-').map(Number);
       const dateLabel = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
       
-      let slotsHtml = dateSlots.map(slot => {
+      let slotsHtml = dateSlots.map((slot, index) => {
         const sel = state.selectedSlot?.startTime === slot.startTime && state.selectedSlot?.date === slot.date;
         const label = getSlotLabel(slot);
         return `
-          <button type="button" class="bw__slot ${sel ? 'bw__slot--selected' : ''}" onclick='selectSlot(${JSON.stringify(slot)})'>
+          <button type="button" class="bw__slot ${sel ? 'bw__slot--selected' : ''}" data-slot-index="${index}">
             <span class="bw__slot-label">${label}</span>
           </button>
         `;
@@ -1073,7 +1073,7 @@
       
       if (state.selectedSlot) {
         slotsHtml += `
-          <button type="button" class="bw__slot bw__slot--continue" onclick="showView('location')">
+          <button type="button" class="bw__slot bw__slot--continue" id="btn-continue-slot">
             <span class="bw__slot-label">Continuer</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
           </button>
@@ -1084,6 +1084,21 @@
         <p class="bw__slots-date">${dateLabel}</p>
         <div class="bw__slots-list">${slotsHtml}</div>
       `;
+      
+      // Attacher les événements après insertion dans le DOM
+      el.querySelectorAll('[data-slot-index]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const index = parseInt(this.dataset.slotIndex);
+          selectSlot(dateSlots[index]);
+        });
+      });
+      
+      const continueBtn = document.getElementById('btn-continue-slot');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+          showView('location');
+        });
+      }
     }
 
     // ================================================
@@ -1146,8 +1161,11 @@
     // ================================================
     function showView(name) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById(`view-${name}`).classList.add('active');
-      window.scrollTo(0, 0);
+      const targetView = document.getElementById(`view-${name}`);
+      if (targetView) {
+        targetView.classList.add('active');
+        window.scrollTo(0, 0);
+      }
     }
 
     function goToCoordinates() {
@@ -1239,7 +1257,12 @@
     // ================================================
     function showLoading(show) {
       document.getElementById('loading').style.display = show ? 'flex' : 'none';
-      document.getElementById('view-calendar').style.display = show ? 'none' : 'block';
+      // Ne pas toucher au style inline - laisser les classes CSS gérer l'affichage
+      if (show) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      } else {
+        document.getElementById('view-calendar').classList.add('active');
+      }
     }
 
     function showError(msg) {
