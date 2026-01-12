@@ -33,16 +33,16 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding: 1rem 0;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
     }
     
     .bw__back {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.25rem;
       padding: 0.5rem 0.75rem;
       margin-left: -0.75rem;
+      margin-bottom: 0.5rem;
       background: none;
       border: none;
       border-radius: 8px;
@@ -63,9 +63,10 @@
     }
     
     .bw__title {
-      font-size: 17px;
+      font-size: 28px;
       font-weight: 600;
       color: #1d1d1f;
+      margin: 0;
     }
     
     /* Error */
@@ -190,15 +191,26 @@
       border-radius: 14px;
       padding: 1.25rem;
       border: 1px solid #d2d2d7;
+      align-items: start;
     }
     
     @media (max-width: 600px) {
       .bw__scheduling {
         grid-template-columns: 1fr;
       }
+      
+      .bw__slots {
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e5e5;
+      }
     }
     
     /* Calendar */
+    .bw__calendar {
+      position: relative;
+    }
+    
     .bw__calendar__header {
       display: flex;
       justify-content: space-between;
@@ -318,6 +330,7 @@
     .bw__slots {
       display: flex;
       flex-direction: column;
+      min-width: 200px;
     }
     
     .bw__slots-empty {
@@ -345,17 +358,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.875rem 1.25rem;
+      padding: 0.75rem 1rem;
       background: #f5f5f7;
       border: 1.5px solid transparent;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.15s ease;
-      min-height: 52px;
+      min-height: 48px;
+      text-align: left;
     }
     
-    .bw__slot:hover {
+    .bw__slot:hover:not(.bw__slot--selected):not(.bw__slot--continue) {
       border-color: #0071e3;
+      background: #f0f7ff;
     }
     
     .bw__slot--selected,
@@ -368,8 +383,9 @@
       font-size: 14px;
       font-weight: 500;
       color: #1d1d1f;
-      text-align: left;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     
     .bw__slot--selected .bw__slot-label {
@@ -377,15 +393,39 @@
     }
     
     .bw__slot-time {
-      font-size: 12px;
+      font-size: 13px;
       color: #86868b;
       white-space: nowrap;
-      margin-left: 1rem;
+      margin-left: 0.75rem;
       flex-shrink: 0;
     }
     
     .bw__slot--selected .bw__slot-time {
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.85);
+    }
+    
+    /* Bouton Continuer dans la liste des créneaux */
+    .bw__slot--continue {
+      background: #0071e3;
+      border-color: #0071e3;
+      margin-top: 0.25rem;
+    }
+    
+    .bw__slot--continue:hover {
+      background: #0077ed;
+      border-color: #0077ed;
+    }
+    
+    .bw__slot--continue .bw__slot-label {
+      color: #fff;
+      font-weight: 600;
+    }
+    
+    .bw__slot--continue svg {
+      color: #fff;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
     }
     
     /* Form */
@@ -425,6 +465,7 @@
       color: #1d1d1f;
       background: #fff;
       transition: all 0.15s ease;
+      font-family: inherit;
     }
     
     .bw__field input:focus,
@@ -442,7 +483,6 @@
     .bw__field textarea {
       resize: vertical;
       min-height: 80px;
-      font-family: inherit;
     }
     
     .bw__field-row {
@@ -452,59 +492,6 @@
     
     .bw__field-row .bw__field {
       flex: 1;
-    }
-    
-    /* Location Options */
-    .bw__location-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    
-    .bw__location-option {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.875rem;
-      padding: 1rem 1.25rem;
-      background: #fff;
-      border: 1.5px solid #d2d2d7;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    
-    .bw__location-option:hover {
-      border-color: #86868b;
-    }
-    
-    .bw__location-option--selected {
-      border-color: #0071e3;
-      background: #f5f8ff;
-    }
-    
-    .bw__location-option input[type="radio"] {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      accent-color: #0071e3;
-      cursor: pointer;
-    }
-    
-    .bw__location-option-content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.125rem;
-    }
-    
-    .bw__location-option-title {
-      font-size: 15px;
-      font-weight: 500;
-      color: #1d1d1f;
-    }
-    
-    .bw__location-option-address {
-      font-size: 13px;
-      color: #86868b;
     }
     
     /* Summary */
@@ -675,24 +662,24 @@
               </div>
               <div class="bw__calendar__days" id="calendar-days"></div>
             </div>
+            
+            <!-- Slots Panel -->
             <div class="bw__slots" id="slots-panel">
               <p class="bw__slots-empty">Sélectionnez une date</p>
             </div>
           </div>
-          <button id="btn-continue-calendar" class="bw__cta" onclick="showView('form')" style="display: none;">
-            Continuer
-          </button>
         </section>
       </div>
     </div>
     
     <!-- STEP 2: Form -->
     <div id="view-form" class="view">
+      <button class="bw__back" onclick="showView('calendar')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        <span>Retour</span>
+      </button>
+      
       <header class="bw__header">
-        <button class="bw__back" onclick="showView('calendar')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          <span>Retour</span>
-        </button>
         <h1 class="bw__title">Vos coordonnées</h1>
       </header>
       
@@ -785,7 +772,7 @@
 
   <script>
     // ================================================
-    // CONFIG
+    // CONFIG - À MODIFIER AVEC VOS VALEURS
     // ================================================
     const SUPABASE_URL = "https://eenyygeizwabcfnotcdl.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlbnl5Z2VpendhYmNmbm90Y2RsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMzE4MDIsImV4cCI6MjA4MDgwNzgwMn0.aSif5DIk1Bv8wdJWDofHNmuscNbi5-B2NlGEmFhVFoY";
@@ -803,7 +790,7 @@
       currentMonth: new Date()
     };
     
-    // Cache des disponibilités par type (pour éviter les appels répétés)
+    // Cache des disponibilités par type
     const availabilityCache = {};
 
     // ================================================
@@ -812,7 +799,7 @@
     document.addEventListener('DOMContentLoaded', loadPrestationTypes);
 
     // ================================================
-    // DATA
+    // DATA LOADING
     // ================================================
     async function loadPrestationTypes() {
       showLoading(true);
@@ -838,7 +825,6 @@
     }
 
     async function loadAllAvailabilities() {
-      // Charger les disponibilités pour tous les types en parallèle
       const promises = state.prestationTypes.map(async (type) => {
         try {
           const res = await fetch(
@@ -846,7 +832,8 @@
             { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
           );
           const data = await res.json();
-          availabilityCache[type.slug] = data.slots || [];
+          // Support nouveau format (object avec slots) et ancien format (array)
+          availabilityCache[type.slug] = data.slots || data || [];
         } catch (err) {
           console.error(`Erreur chargement disponibilités ${type.slug}:`, err);
           availabilityCache[type.slug] = [];
@@ -861,7 +848,6 @@
     }
 
     function applyAvailabilityFromCache() {
-      // Utiliser le cache au lieu de refaire un appel API
       state.slots = availabilityCache[state.selectedType.slug] || [];
       renderCalendar();
     }
@@ -905,13 +891,13 @@
       const lastDay = new Date(year, month + 1, 0);
       const startDay = (firstDay.getDay() + 6) % 7;
       
-      // Prev month
+      // Jours du mois précédent
       const prevLast = new Date(year, month, 0).getDate();
       for (let i = startDay - 1; i >= 0; i--) {
         container.appendChild(createDay(prevLast - i, 'other'));
       }
       
-      // Current month
+      // Jours du mois courant
       for (let d = 1; d <= lastDay.getDate(); d++) {
         const date = new Date(year, month, d);
         const dateStr = formatDateISO(date);
@@ -931,7 +917,7 @@
         container.appendChild(btn);
       }
       
-      // Next month
+      // Jours du mois suivant
       const total = container.children.length;
       const remaining = Math.ceil(total / 7) * 7 - total;
       for (let d = 1; d <= remaining; d++) {
@@ -953,40 +939,91 @@
 
     function renderSlots() {
       const el = document.getElementById('slots-panel');
-      const btnContinue = document.getElementById('btn-continue-calendar');
       
       if (!state.selectedDate) {
         el.innerHTML = '<p class="bw__slots-empty">Sélectionnez une date</p>';
-        btnContinue.style.display = 'none';
         return;
       }
       
       const dateSlots = state.slots.filter(s => s.date === state.selectedDate);
       if (!dateSlots.length) {
-        el.innerHTML = '<p class="bw__slots-empty">Aucun créneau</p>';
-        btnContinue.style.display = 'none';
+        el.innerHTML = '<p class="bw__slots-empty">Aucun créneau disponible</p>';
         return;
       }
       
       const [y, m, d] = state.selectedDate.split('-').map(Number);
       const dateLabel = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
       
+      // Générer les créneaux
+      let slotsHtml = dateSlots.map(slot => {
+        const sel = state.selectedSlot?.startTime === slot.startTime && state.selectedSlot?.date === slot.date;
+        const label = getSlotLabel(slot);
+        const time = getSlotTime(slot);
+        return `
+          <button type="button" class="bw__slot ${sel ? 'bw__slot--selected' : ''}" onclick='selectSlot(${JSON.stringify(slot)})'>
+            <span class="bw__slot-label">${label}</span>
+            <span class="bw__slot-time">${time}</span>
+          </button>
+        `;
+      }).join('');
+      
+      // Ajouter le bouton Continuer s'il y a un créneau sélectionné
+      if (state.selectedSlot) {
+        slotsHtml += `
+          <button type="button" class="bw__slot bw__slot--continue" onclick="showView('form')">
+            <span class="bw__slot-label">Continuer</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        `;
+      }
+      
       el.innerHTML = `
         <p class="bw__slots-date">${dateLabel}</p>
         <div class="bw__slots-list">
-          ${dateSlots.map(slot => {
-            const sel = state.selectedSlot?.startTime === slot.startTime && state.selectedSlot?.date === slot.date;
-            return `
-              <button type="button" class="bw__slot ${sel ? 'bw__slot--selected' : ''}" onclick='selectSlot(${JSON.stringify(slot)})'>
-                <span class="bw__slot-label">${getSlotLabel(slot)}</span>
-                <span class="bw__slot-time">${getSlotTime(slot)}</span>
-              </button>
-            `;
-          }).join('')}
+          ${slotsHtml}
         </div>
       `;
+    }
+
+    // ================================================
+    // SLOT LABEL & TIME HELPERS (Dynamiques)
+    // ================================================
+    
+    /**
+     * Formate une heure "09:00" en "9h" ou "09:30" en "9h30"
+     */
+    function formatHour(time) {
+      const [hours, minutes] = time.split(':');
+      const h = parseInt(hours, 10);
+      if (minutes === '00') {
+        return `${h}h`;
+      }
+      return `${h}h${minutes}`;
+    }
+    
+    /**
+     * Retourne le label du créneau
+     * Utilise le label de l'API s'il existe, sinon génère un label
+     */
+    function getSlotLabel(slot) {
+      // Si l'API fournit un label, l'utiliser
+      if (slot.label) {
+        return slot.label;
+      }
       
-      btnContinue.style.display = state.selectedSlot ? 'flex' : 'none';
+      // Sinon générer un label basé sur l'heure
+      const startHour = parseInt(slot.startTime.split(':')[0], 10);
+      if (startHour < 12) {
+        return 'Matin';
+      }
+      return 'Après-midi';
+    }
+    
+    /**
+     * Retourne l'affichage des heures : "9h – 12h"
+     */
+    function getSlotTime(slot) {
+      return `${formatHour(slot.startTime)} – ${formatHour(slot.endTime)}`;
     }
 
     // ================================================
@@ -997,7 +1034,7 @@
       state.selectedDate = null;
       state.selectedSlot = null;
       renderFormulas();
-      applyAvailabilityFromCache(); // Instantané depuis le cache
+      applyAvailabilityFromCache();
     }
 
     function selectDate(dateStr) {
@@ -1078,18 +1115,8 @@
     }
 
     // ================================================
-    // HELPERS
+    // UTILITY FUNCTIONS
     // ================================================
-    function getSlotLabel(slot) {
-      if (state.selectedType?.slug === 'journee') return 'Journée complète';
-      return slot.startTime === '09:00' ? 'Matin' : 'Après-midi';
-    }
-
-    function getSlotTime(slot) {
-      if (state.selectedType?.slug === 'journee') return '9h – 16h';
-      return slot.startTime === '09:00' ? '9h – 12h' : '13h – 16h';
-    }
-
     function formatDateISO(date) {
       return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
     }
