@@ -28,14 +28,7 @@
       max-width: 680px;
     }
     
-    /* Header */
-    .bw__header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    
+    /* Back button */
     .bw__back {
       display: inline-flex;
       align-items: center;
@@ -54,12 +47,16 @@
     
     .bw__back:hover {
       background: rgba(0, 113, 227, 0.08);
-      color: #0077ed;
     }
     
     .bw__back svg {
       width: 18px;
       height: 18px;
+    }
+    
+    /* Header */
+    .bw__header {
+      margin-bottom: 1.5rem;
     }
     
     .bw__title {
@@ -92,13 +89,19 @@
     }
     
     /* Section */
+    .bw__section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
     .bw__section-title {
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: #86868b;
-      margin-bottom: 1rem;
+      margin: 0;
     }
     
     /* Formulas */
@@ -130,8 +133,7 @@
       border-color: #86868b;
     }
     
-    .bw__formula--selected,
-    .bw__formula--selected:hover {
+    .bw__formula--selected {
       border-color: #0071e3;
       background: #f5f8ff;
     }
@@ -310,8 +312,7 @@
       background: #d4ebfc;
     }
     
-    .bw__calendar__day.selected,
-    .bw__calendar__day.selected:hover {
+    .bw__calendar__day.selected {
       background: #0071e3;
       color: #fff;
       font-weight: 600;
@@ -372,8 +373,7 @@
       background: #f0f7ff;
     }
     
-    .bw__slot--selected,
-    .bw__slot--selected:hover {
+    .bw__slot--selected {
       background: #0071e3;
       border-color: #0071e3;
     }
@@ -388,19 +388,7 @@
       color: #fff;
     }
     
-    .bw__slot-time {
-      font-size: 13px;
-      color: #86868b;
-      white-space: nowrap;
-      margin-left: 0.75rem;
-      flex-shrink: 0;
-    }
-    
-    .bw__slot--selected .bw__slot-time {
-      color: rgba(255,255,255,0.85);
-    }
-    
-    /* Bouton Continuer dans la liste des créneaux */
+    /* Continue button in slots */
     .bw__slot--continue {
       background: #0071e3;
       border-color: #0071e3;
@@ -420,9 +408,61 @@
     
     .bw__slot--continue svg {
       color: #fff;
-      flex-shrink: 0;
       width: 14px;
       height: 14px;
+    }
+    
+    /* Location Options */
+    .bw__location-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .bw__location-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1rem 1.25rem;
+      background: #fff;
+      border: 1.5px solid #d2d2d7;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    
+    .bw__location-option:hover {
+      border-color: #86868b;
+    }
+    
+    .bw__location-option--selected {
+      border-color: #0071e3;
+      background: #f5f8ff;
+    }
+    
+    .bw__location-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #0071e3;
+      cursor: pointer;
+    }
+    
+    .bw__location-option-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+    
+    .bw__location-option-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1d1d1f;
+    }
+    
+    .bw__location-option-address {
+      font-size: 13px;
+      color: #86868b;
     }
     
     /* Form */
@@ -625,7 +665,9 @@
       <div class="bw__spinner"></div>
     </div>
     
-    <!-- STEP 1: Calendar -->
+    <!-- ============================================
+         ÉTAPE 1: Calendrier
+         ============================================ -->
     <div id="view-calendar" class="view active">
       <header class="bw__header">
         <h1 class="bw__title">Réserver une séance</h1>
@@ -633,13 +675,13 @@
       
       <div class="bw__content">
         <!-- Formulas -->
-        <section>
+        <section class="bw__section">
           <h2 class="bw__section-title">Choisissez votre formule</h2>
           <div class="bw__formulas" id="formulas"></div>
         </section>
         
         <!-- Calendar + Slots -->
-        <section>
+        <section class="bw__section">
           <h2 class="bw__section-title">Sélectionnez une date</h2>
           <div class="bw__scheduling">
             <div class="bw__calendar">
@@ -660,7 +702,6 @@
               <div class="bw__calendar__days" id="calendar-days"></div>
             </div>
             
-            <!-- Slots Panel -->
             <div class="bw__slots" id="slots-panel">
               <p class="bw__slots-empty">Sélectionnez une date</p>
             </div>
@@ -669,11 +710,69 @@
       </div>
     </div>
     
-    <!-- STEP 2: Form -->
-    <div id="view-form" class="view">
+    <!-- ============================================
+         ÉTAPE 2: Lieu du shooting
+         ============================================ -->
+    <div id="view-location" class="view">
       <button class="bw__back" onclick="showView('calendar')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        <span>Retour</span>
+        <span>Précédent</span>
+      </button>
+      
+      <header class="bw__header">
+        <h1 class="bw__title">Lieu du shooting</h1>
+      </header>
+      
+      <div class="bw__content">
+        <section class="bw__section">
+          <h2 class="bw__section-title">Où aura lieu le shooting ?</h2>
+          
+          <div class="bw__location-options">
+            <label class="bw__location-option bw__location-option--selected" id="loc-new" onclick="selectLocation('new')">
+              <input type="radio" name="location" checked>
+              <div class="bw__location-option-content">
+                <span class="bw__location-option-title">Nouvelle adresse</span>
+                <span class="bw__location-option-address">Renseigner l'adresse du shooting</span>
+              </div>
+            </label>
+          </div>
+          
+          <div class="bw__form" id="address-form">
+            <div class="bw__field">
+              <label>Adresse *</label>
+              <input type="text" id="address" placeholder="123 rue de la Photo" autocomplete="off">
+            </div>
+            <div class="bw__field-row">
+              <div class="bw__field">
+                <label>Code postal *</label>
+                <input type="text" id="postalCode" placeholder="75001" autocomplete="off">
+              </div>
+              <div class="bw__field">
+                <label>Ville *</label>
+                <input type="text" id="city" placeholder="Paris" autocomplete="off">
+              </div>
+            </div>
+          </div>
+          
+          <div class="bw__field" style="margin-top: 1rem;">
+            <label>Notes <span>(optionnel)</span></label>
+            <textarea id="notes" placeholder="Accès, parking, code d'entrée..." autocomplete="off"></textarea>
+          </div>
+          
+          <button class="bw__cta" onclick="goToCoordinates()">
+            Continuer
+          </button>
+        </section>
+      </div>
+    </div>
+    
+    <!-- ============================================
+         ÉTAPE 3: Coordonnées
+         ============================================ -->
+    <div id="view-coordinates" class="view">
+      <button class="bw__back" onclick="showView('location')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        <span>Précédent</span>
       </button>
       
       <header class="bw__header">
@@ -681,52 +780,57 @@
       </header>
       
       <div class="bw__content">
-        <form id="booking-form" onsubmit="submitForm(event)" autocomplete="off">
+        <section class="bw__section">
+          <h2 class="bw__section-title">Informations de contact</h2>
+          
           <div class="bw__form">
             <div class="bw__field-row">
               <div class="bw__field">
                 <label>Prénom *</label>
-                <input type="text" id="firstName" placeholder="Jean" required autocomplete="off">
+                <input type="text" id="firstName" placeholder="Jean" autocomplete="off">
               </div>
               <div class="bw__field">
                 <label>Nom *</label>
-                <input type="text" id="lastName" placeholder="Dupont" required autocomplete="off">
+                <input type="text" id="lastName" placeholder="Dupont" autocomplete="off">
               </div>
             </div>
             
             <div class="bw__field">
               <label>Email *</label>
-              <input type="email" id="email" placeholder="jean@exemple.com" required autocomplete="off">
+              <input type="email" id="email" placeholder="jean@exemple.com" autocomplete="off">
             </div>
             
             <div class="bw__field">
-              <label>Téléphone</label>
+              <label>Téléphone <span>(optionnel)</span></label>
               <input type="tel" id="phone" placeholder="06 12 34 56 78" autocomplete="off">
-            </div>
-            
-            <div class="bw__field">
-              <label>Adresse du shooting *</label>
-              <input type="text" id="address" placeholder="12 rue du Commerce" required autocomplete="off">
-            </div>
-            
-            <div class="bw__field-row">
-              <div class="bw__field">
-                <label>Code postal *</label>
-                <input type="text" id="postalCode" placeholder="75001" required autocomplete="off">
-              </div>
-              <div class="bw__field">
-                <label>Ville *</label>
-                <input type="text" id="city" placeholder="Paris" required autocomplete="off">
-              </div>
-            </div>
-            
-            <div class="bw__field">
-              <label>Notes <span>(optionnel)</span></label>
-              <textarea id="notes" placeholder="Accès, parking, code d'entrée..." autocomplete="off"></textarea>
             </div>
           </div>
           
-          <div class="bw__summary" style="margin-top: 1.5rem;">
+          <button class="bw__cta" onclick="goToConfirm()">
+            Continuer
+          </button>
+        </section>
+      </div>
+    </div>
+    
+    <!-- ============================================
+         ÉTAPE 4: Confirmation
+         ============================================ -->
+    <div id="view-confirm" class="view">
+      <button class="bw__back" onclick="showView('coordinates')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        <span>Précédent</span>
+      </button>
+      
+      <header class="bw__header">
+        <h1 class="bw__title">Confirmation</h1>
+      </header>
+      
+      <div class="bw__content">
+        <section class="bw__section">
+          <h2 class="bw__section-title">Récapitulatif</h2>
+          
+          <div class="bw__summary">
             <div class="bw__summary-row">
               <span>Prestation</span>
               <span id="summary-type"></span>
@@ -739,7 +843,13 @@
               <span>Créneau</span>
               <span id="summary-slot"></span>
             </div>
+            <div class="bw__summary-row">
+              <span>Lieu</span>
+              <span id="summary-location"></span>
+            </div>
+            
             <div class="bw__summary-divider"></div>
+            
             <div class="bw__summary-row">
               <span>Prix total</span>
               <span id="summary-total"></span>
@@ -755,21 +865,21 @@
             et notre <a href="https://isokron.fr/confidentialite" target="_blank">politique de confidentialité</a>.
           </p>
           
-          <button type="submit" class="bw__cta bw__cta--primary" id="submit-btn">
+          <button class="bw__cta bw__cta--primary" id="submit-btn" onclick="submitBooking()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="1" y="4" width="22" height="16" rx="2"/>
               <line x1="1" y1="10" x2="23" y2="10"/>
             </svg>
             <span id="submit-text">Payer l'acompte</span>
           </button>
-        </form>
+        </section>
       </div>
     </div>
   </div>
 
   <script>
     // ================================================
-    // CONFIG - À MODIFIER AVEC VOS VALEURS
+    // CONFIG
     // ================================================
     const SUPABASE_URL = "https://eenyygeizwabcfnotcdl.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlbnl5Z2VpendhYmNmbm90Y2RsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMzE4MDIsImV4cCI6MjA4MDgwNzgwMn0.aSif5DIk1Bv8wdJWDofHNmuscNbi5-B2NlGEmFhVFoY";
@@ -787,7 +897,6 @@
       currentMonth: new Date()
     };
     
-    // Cache des disponibilités par type
     const availabilityCache = {};
 
     // ================================================
@@ -810,8 +919,6 @@
           state.prestationTypes = types;
           state.selectedType = types[0];
           renderFormulas();
-          
-          // Charger toutes les disponibilités en parallèle
           await loadAllAvailabilities();
         }
       } catch (err) {
@@ -829,23 +936,29 @@
             { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
           );
           const data = await res.json();
-          // Support nouveau format (object avec slots) et ancien format (array)
           availabilityCache[type.slug] = data.slots || data || [];
         } catch (err) {
-          console.error(`Erreur chargement disponibilités ${type.slug}:`, err);
           availabilityCache[type.slug] = [];
         }
       });
       
       await Promise.all(promises);
-      
-      // Appliquer les slots du type sélectionné
       state.slots = availabilityCache[state.selectedType.slug] || [];
       renderCalendar();
     }
 
     function applyAvailabilityFromCache() {
       state.slots = availabilityCache[state.selectedType.slug] || [];
+      
+      // Vérifier si la date sélectionnée est toujours disponible
+      if (state.selectedDate) {
+        const dateStillAvailable = state.slots.some(s => s.date === state.selectedDate);
+        if (!dateStillAvailable) {
+          state.selectedDate = null;
+          state.selectedSlot = null;
+        }
+      }
+      
       renderCalendar();
     }
 
@@ -888,13 +1001,11 @@
       const lastDay = new Date(year, month + 1, 0);
       const startDay = (firstDay.getDay() + 6) % 7;
       
-      // Jours du mois précédent
       const prevLast = new Date(year, month, 0).getDate();
       for (let i = startDay - 1; i >= 0; i--) {
         container.appendChild(createDay(prevLast - i, 'other'));
       }
       
-      // Jours du mois courant
       for (let d = 1; d <= lastDay.getDate(); d++) {
         const date = new Date(year, month, d);
         const dateStr = formatDateISO(date);
@@ -914,7 +1025,6 @@
         container.appendChild(btn);
       }
       
-      // Jours du mois suivant
       const total = container.children.length;
       const remaining = Math.ceil(total / 7) * 7 - total;
       for (let d = 1; d <= remaining; d++) {
@@ -951,7 +1061,6 @@
       const [y, m, d] = state.selectedDate.split('-').map(Number);
       const dateLabel = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
       
-      // Générer les créneaux - afficher seulement le label (qui contient déjà les heures)
       let slotsHtml = dateSlots.map(slot => {
         const sel = state.selectedSlot?.startTime === slot.startTime && state.selectedSlot?.date === slot.date;
         const label = getSlotLabel(slot);
@@ -962,10 +1071,9 @@
         `;
       }).join('');
       
-      // Ajouter le bouton Continuer s'il y a un créneau sélectionné
       if (state.selectedSlot) {
         slotsHtml += `
-          <button type="button" class="bw__slot bw__slot--continue" onclick="showView('form')">
+          <button type="button" class="bw__slot bw__slot--continue" onclick="showView('location')">
             <span class="bw__slot-label">Continuer</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
           </button>
@@ -974,47 +1082,32 @@
       
       el.innerHTML = `
         <p class="bw__slots-date">${dateLabel}</p>
-        <div class="bw__slots-list">
-          ${slotsHtml}
-        </div>
+        <div class="bw__slots-list">${slotsHtml}</div>
       `;
     }
 
     // ================================================
-    // SLOT LABEL & TIME HELPERS (Dynamiques)
+    // HELPERS
     // ================================================
-    
-    /**
-     * Formate une heure "09:00" en "9h" ou "09:30" en "9h30"
-     */
     function formatHour(time) {
       const [hours, minutes] = time.split(':');
       const h = parseInt(hours, 10);
-      if (minutes === '00') {
-        return `${h}h`;
-      }
+      if (minutes === '00') return `${h}h`;
       return `${h}h${minutes}`;
     }
     
-    /**
-     * Retourne le label du créneau
-     * Utilise le label de l'API s'il existe, sinon génère un label avec les heures
-     */
     function getSlotLabel(slot) {
-      // Si l'API fournit un label, l'utiliser
-      if (slot.label) {
-        return slot.label;
-      }
-      
-      // Sinon générer un label avec les heures seulement
+      if (slot.label) return slot.label;
       return `${formatHour(slot.startTime)} - ${formatHour(slot.endTime)}`;
     }
-    
-    /**
-     * Retourne l'affichage des heures : "9h – 12h"
-     */
-    function getSlotTime(slot) {
-      return `${formatHour(slot.startTime)} – ${formatHour(slot.endTime)}`;
+
+    function formatDateISO(date) {
+      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    }
+
+    function formatDateLong(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      return new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
     }
 
     // ================================================
@@ -1022,19 +1115,9 @@
     // ================================================
     function selectType(id) {
       state.selectedType = state.prestationTypes.find(t => t.id === id);
-      // Garder la date sélectionnée, réinitialiser seulement le créneau
       state.selectedSlot = null;
       renderFormulas();
       applyAvailabilityFromCache();
-      
-      // Vérifier si la date est toujours disponible
-      if (state.selectedDate) {
-        const dateStillAvailable = state.slots.some(s => s.date === state.selectedDate);
-        if (!dateStillAvailable) {
-          state.selectedDate = null;
-        }
-      }
-      renderCalendar();
     }
 
     function selectDate(dateStr) {
@@ -1058,28 +1141,60 @@
       renderCalendar();
     }
 
+    // ================================================
+    // NAVIGATION
+    // ================================================
     function showView(name) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById(`view-${name}`).classList.add('active');
-      if (name === 'form') updateSummary();
+      window.scrollTo(0, 0);
+    }
+
+    function goToCoordinates() {
+      const address = document.getElementById('address').value.trim();
+      const city = document.getElementById('city').value.trim();
+      
+      if (!address || !city) {
+        showError("Veuillez renseigner l'adresse complète");
+        return;
+      }
+      
+      showView('coordinates');
+    }
+
+    function goToConfirm() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      
+      if (!firstName || !lastName || !email) {
+        showError("Veuillez renseigner vos coordonnées");
+        return;
+      }
+      
+      updateSummary();
+      showView('confirm');
     }
 
     function updateSummary() {
       const t = state.selectedType;
       const s = state.selectedSlot;
       const deposit = Math.round(t.price * (t.deposit_percent / 100));
-      const [y, m, d] = s.date.split('-').map(Number);
+      
+      const address = document.getElementById('address').value.trim();
+      const postalCode = document.getElementById('postalCode').value.trim();
+      const city = document.getElementById('city').value.trim();
       
       document.getElementById('summary-type').textContent = t.name;
-      document.getElementById('summary-date').textContent = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-      document.getElementById('summary-slot').textContent = `${getSlotLabel(s)} · ${getSlotTime(s)}`;
+      document.getElementById('summary-date').textContent = formatDateLong(s.date);
+      document.getElementById('summary-slot').textContent = getSlotLabel(s);
+      document.getElementById('summary-location').textContent = `${address}, ${postalCode} ${city}`;
       document.getElementById('summary-total').textContent = `${t.price} €`;
       document.getElementById('summary-deposit').textContent = `${deposit} €`;
       document.getElementById('submit-text').textContent = `Payer ${deposit} €`;
     }
 
-    async function submitForm(e) {
-      e.preventDefault();
+    async function submitBooking() {
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
       document.getElementById('submit-text').textContent = 'Chargement...';
@@ -1087,7 +1202,11 @@
       try {
         const res = await fetch(`${API_BASE}/create-booking`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+          headers: { 
+            'Content-Type': 'application/json', 
+            'apikey': SUPABASE_ANON_KEY, 
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
+          },
           body: JSON.stringify({
             prestationType: state.selectedType.slug,
             date: state.selectedSlot.date,
@@ -1103,6 +1222,7 @@
             notes: document.getElementById('notes').value.trim()
           })
         });
+        
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         if (data.checkoutUrl) window.location.href = data.checkoutUrl;
@@ -1115,12 +1235,8 @@
     }
 
     // ================================================
-    // UTILITY FUNCTIONS
+    // UTILITY
     // ================================================
-    function formatDateISO(date) {
-      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
-    }
-
     function showLoading(show) {
       document.getElementById('loading').style.display = show ? 'flex' : 'none';
       document.getElementById('view-calendar').style.display = show ? 'none' : 'block';
