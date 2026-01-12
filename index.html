@@ -235,6 +235,10 @@
     
     .bw__field input:focus,
     .bw__field textarea:focus { outline: none; border-color: #0071e3; box-shadow: 0 0 0 3px rgba(0,113,227,0.1); }
+    .bw__field input.invalid,
+    .bw__field textarea.invalid { border-color: #de071c; }
+    .bw__field input.invalid:focus,
+    .bw__field textarea.invalid:focus { border-color: #de071c; box-shadow: 0 0 0 3px rgba(222,7,28,0.1); }
     .bw__field input::placeholder,
     .bw__field textarea::placeholder { color: #86868b; }
     .bw__field textarea { resize: vertical; min-height: 80px; }
@@ -418,7 +422,7 @@
           </div>
         </section>
         
-        <button type="button" class="bw__cta" id="btn-to-confirm">
+        <button type="button" class="bw__cta bw__cta--primary" id="btn-to-confirm">
           Continuer
         </button>
       </div>
@@ -526,6 +530,14 @@
       document.getElementById('btn-to-confirm').addEventListener('click', goToConfirm);
       document.getElementById('btn-submit').addEventListener('click', submitBooking);
       
+      // Clear error styling on input
+      var fields = ['firstName', 'lastName', 'email', 'address', 'postalCode', 'city'];
+      fields.forEach(function(id) {
+        document.getElementById(id).addEventListener('input', function() {
+          this.classList.remove('invalid');
+        });
+      });
+      
       // Load data
       loadPrestationTypes();
     });
@@ -549,24 +561,74 @@
     }
     
     function goToConfirm() {
+      // Réinitialiser les erreurs visuelles
+      clearFieldErrors();
+      
       var firstName = document.getElementById('firstName').value.trim();
       var lastName = document.getElementById('lastName').value.trim();
       var email = document.getElementById('email').value.trim();
       var address = document.getElementById('address').value.trim();
+      var postalCode = document.getElementById('postalCode').value.trim();
       var city = document.getElementById('city').value.trim();
       
-      if (!firstName || !lastName || !email) {
-        showError("Veuillez renseigner vos coordonnées (prénom, nom, email)");
+      // Validation des champs requis
+      if (!firstName) {
+        showFieldError('firstName', "Veuillez renseigner votre prénom");
         return;
       }
       
-      if (!address || !city) {
-        showError("Veuillez renseigner l'adresse du shooting");
+      if (!lastName) {
+        showFieldError('lastName', "Veuillez renseigner votre nom");
+        return;
+      }
+      
+      if (!email) {
+        showFieldError('email', "Veuillez renseigner votre email");
+        return;
+      }
+      
+      // Validation email
+      if (!isValidEmail(email)) {
+        showFieldError('email', "Veuillez renseigner un email valide");
+        return;
+      }
+      
+      if (!address) {
+        showFieldError('address', "Veuillez renseigner l'adresse du shooting");
+        return;
+      }
+      
+      if (!postalCode) {
+        showFieldError('postalCode', "Veuillez renseigner le code postal");
+        return;
+      }
+      
+      if (!city) {
+        showFieldError('city', "Veuillez renseigner la ville");
         return;
       }
       
       updateSummary();
       goToView('confirm');
+    }
+    
+    function isValidEmail(email) {
+      var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+    
+    function showFieldError(fieldId, message) {
+      var field = document.getElementById(fieldId);
+      field.classList.add('invalid');
+      field.focus();
+      showError(message);
+    }
+    
+    function clearFieldErrors() {
+      var fields = ['firstName', 'lastName', 'email', 'address', 'postalCode', 'city'];
+      fields.forEach(function(id) {
+        document.getElementById(id).classList.remove('invalid');
+      });
     }
 
     // ================================================
