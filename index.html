@@ -250,6 +250,19 @@
     .bw__summary-divider { height: 1px; background: #d2d2d7; margin: 0.5rem 0; }
     .bw__summary-row--highlight > span:last-child { font-size: 17px; font-weight: 600; color: #0071e3; }
     
+    /* Deposit info */
+    .bw__deposit-info {
+      font-size: 13px;
+      color: #1d1d1f;
+      text-align: center;
+      background: #f0f7ff;
+      border: 1px solid #d4ebfc;
+      border-radius: 10px;
+      padding: 0.875rem 1rem;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    
     /* Legal */
     .bw__legal { font-size: 12px; color: #86868b; text-align: center; margin: 1.5rem 0 1rem; line-height: 1.5; }
     .bw__legal a { color: #0071e3; text-decoration: none; }
@@ -453,10 +466,14 @@
               <span id="summary-total"></span>
             </div>
             <div class="bw__summary-row bw__summary-row--highlight">
-              <span>Acompte à payer</span>
+              <span>Acompte de réservation</span>
               <span id="summary-deposit"></span>
             </div>
           </div>
+          
+          <p class="bw__deposit-info">
+            L'acompte confirme votre réservation. Le solde sera à régler le jour du shooting.
+          </p>
           
           <p class="bw__legal">
             En continuant, vous acceptez nos <a href="https://isokron.fr/cgv" target="_blank">CGV</a> 
@@ -631,7 +648,7 @@
           '<p class="bw__formula-desc">' + (t.description || '') + '</p>' +
           '<div class="bw__formula-price">' +
             '<span class="bw__formula-amount">' + t.price + ' €</span>' +
-            '<span class="bw__formula-deposit">Acompte ' + deposit + ' €</span>' +
+            '<span class="bw__formula-deposit">Réservation ' + deposit + ' €</span>' +
           '</div>';
         
         btn.addEventListener('click', function() { selectType(t.id); });
@@ -844,7 +861,7 @@
       document.getElementById('summary-location').textContent = address + ', ' + postalCode + ' ' + city;
       document.getElementById('summary-total').textContent = t.price + ' €';
       document.getElementById('summary-deposit').textContent = deposit + ' €';
-      document.getElementById('submit-text').textContent = 'Payer ' + deposit + ' €';
+      document.getElementById('submit-text').textContent = 'Réserver · ' + deposit + ' €';
     }
 
     async function submitBooking() {
@@ -885,7 +902,7 @@
         showError(err.message || "Une erreur est survenue");
         btn.disabled = false;
         var deposit = Math.round(state.selectedType.price * (state.selectedType.deposit_percent / 100));
-        textEl.textContent = 'Payer ' + deposit + ' €';
+        textEl.textContent = 'Réserver · ' + deposit + ' €';
       }
     }
 
