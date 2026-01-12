@@ -1001,7 +1001,7 @@
     
     /**
      * Retourne le label du créneau
-     * Utilise le label de l'API s'il existe, sinon génère un label
+     * Utilise le label de l'API s'il existe, sinon génère un label avec les heures
      */
     function getSlotLabel(slot) {
       // Si l'API fournit un label, l'utiliser
@@ -1009,12 +1009,8 @@
         return slot.label;
       }
       
-      // Sinon générer un label basé sur l'heure
-      const startHour = parseInt(slot.startTime.split(':')[0], 10);
-      if (startHour < 12) {
-        return 'Matin';
-      }
-      return 'Après-midi';
+      // Sinon générer un label avec les heures seulement
+      return `${formatHour(slot.startTime)} - ${formatHour(slot.endTime)}`;
     }
     
     /**
