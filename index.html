@@ -954,15 +954,13 @@
       const [y, m, d] = state.selectedDate.split('-').map(Number);
       const dateLabel = new Date(y, m-1, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
       
-      // Générer les créneaux
+      // Générer les créneaux - afficher seulement le label (qui contient déjà les heures)
       let slotsHtml = dateSlots.map(slot => {
         const sel = state.selectedSlot?.startTime === slot.startTime && state.selectedSlot?.date === slot.date;
         const label = getSlotLabel(slot);
-        const time = getSlotTime(slot);
         return `
           <button type="button" class="bw__slot ${sel ? 'bw__slot--selected' : ''}" onclick='selectSlot(${JSON.stringify(slot)})'>
             <span class="bw__slot-label">${label}</span>
-            <span class="bw__slot-time">${time}</span>
           </button>
         `;
       }).join('');
@@ -1031,10 +1029,19 @@
     // ================================================
     function selectType(id) {
       state.selectedType = state.prestationTypes.find(t => t.id === id);
-      state.selectedDate = null;
+      // Garder la date sélectionnée, réinitialiser seulement le créneau
       state.selectedSlot = null;
       renderFormulas();
       applyAvailabilityFromCache();
+      
+      // Vérifier si la date est toujours disponible
+      if (state.selectedDate) {
+        const dateStillAvailable = state.slots.some(s => s.date === state.selectedDate);
+        if (!dateStillAvailable) {
+          state.selectedDate = null;
+        }
+      }
+      renderCalendar();
     }
 
     function selectDate(dateStr) {
