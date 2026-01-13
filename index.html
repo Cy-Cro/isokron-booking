@@ -254,17 +254,45 @@
     .bw__summary-divider { height: 1px; background: #d2d2d7; margin: 0.5rem 0; }
     .bw__summary-row--highlight > span:last-child { font-size: 17px; font-weight: 600; color: #0071e3; }
     
-    /* Legal */
-    .bw__legal { font-size: 12px; color: #86868b; text-align: center; margin: 1.5rem 0 1rem; line-height: 1.5; }
-    .bw__legal a { color: #0071e3; text-decoration: none; }
-    .bw__legal a:hover { text-decoration: underline; }
+    /* Checkbox CGV */
+    .bw__checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      margin: 1.5rem 0 1rem;
+      background: #f5f5f7;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1d1d1f;
+      line-height: 1.5;
+    }
+
+    .bw__checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #0071e3;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .bw__checkbox a {
+      color: #0071e3;
+      text-decoration: none;
+    }
+
+    .bw__checkbox a:hover {
+      text-decoration: underline;
+    }
     
     /* CTA */
     .bw__cta {
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
       width: 100%;
       padding: 0.875rem 1.5rem;
-      margin-top: 1.5rem;
+      margin-top: 0.5rem;
       background: #1d1d1f;
       color: #fff;
       border: none;
@@ -462,12 +490,12 @@
             </div>
           </div>
           
-          <p class="bw__legal">
-            En continuant, vous acceptez nos <a href="https://isokron.fr/cgv" target="_blank">CGV</a> 
-            et notre <a href="https://isokron.fr/confidentialite" target="_blank">politique de confidentialité</a>.
-          </p>
+          <label class="bw__checkbox" id="cgv-label">
+            <input type="checkbox" id="acceptCgv">
+            <span>J'accepte les <a href="https://isokron.fr/cgv" target="_blank">CGV</a> et la <a href="https://isokron.fr/confidentialite" target="_blank">politique de confidentialité</a> *</span>
+          </label>
           
-          <button type="button" class="bw__cta bw__cta--primary" id="btn-submit">
+          <button type="button" class="bw__cta bw__cta--primary" id="btn-submit" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="1" y="4" width="22" height="16" rx="2"/>
               <line x1="1" y1="10" x2="23" y2="10"/>
@@ -512,6 +540,11 @@
       document.getElementById('btn-back-confirm').addEventListener('click', function() { goToView('info'); });
       document.getElementById('btn-to-confirm').addEventListener('click', goToConfirm);
       document.getElementById('btn-submit').addEventListener('click', submitBooking);
+      
+      // CGV checkbox
+      document.getElementById('acceptCgv').addEventListener('change', function() {
+        document.getElementById('btn-submit').disabled = !this.checked;
+      });
       
       // Clear error styling on input
       var fields = ['firstName', 'lastName', 'email', 'address', 'postalCode', 'city'];
@@ -907,6 +940,10 @@
       document.getElementById('summary-total').textContent = t.price + ' €';
       document.getElementById('summary-deposit').textContent = deposit + ' €';
       document.getElementById('submit-text').textContent = 'Réserver · ' + deposit + ' €';
+      
+      // Reset checkbox quand on arrive sur cette page
+      document.getElementById('acceptCgv').checked = false;
+      document.getElementById('btn-submit').disabled = true;
     }
 
     async function submitBooking() {
@@ -936,7 +973,8 @@
             address: document.getElementById('address').value.trim(),
             postalCode: document.getElementById('postalCode').value.trim(),
             city: document.getElementById('city').value.trim(),
-            notes: document.getElementById('notes').value.trim()
+            notes: document.getElementById('notes').value.trim(),
+            cgvAcceptedAt: new Date().toISOString()
           })
         });
         
